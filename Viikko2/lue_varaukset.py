@@ -30,13 +30,5 @@ def main():
     print(varausId)
     print(type(varausId))
 
-    """
-    Edellisen olisi pitänyt tulostaa numeron 123, joka
-    on oletuksena tekstiä.
-
-    Voit kokeilla myös vaihtaa kohdan [0] esim. seuraavaksi [1]
-    ja testata mikä muuttuu
-    """
-
 if __name__ == "__main__":
     main()
