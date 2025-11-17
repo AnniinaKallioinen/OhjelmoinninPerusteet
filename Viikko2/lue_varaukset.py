@@ -17,31 +17,45 @@ Sähköposti: anna.virtanen@example.com
 """
 
 def main():
-    # Määritellään tiedoston nimi suoraan koodissa
     varaukset = "varaukset.txt"
 
-    # Avataan tiedosto ja luetaan sisältö
     with open(varaukset, "r", encoding="utf-8") as f:
         varaus = f.read().strip()
 
     from datetime import datetime
-    paiva = datetime.strptime(varaus[2], "%Y-%m-%d").date()
-    suomalainenPaiva = paiva.strftime("%d.%m.%Y")
-    aika = datetime.strptime(varaus[3], "%H:%M").time()
-    suomalainenAika = aika.strftime("%H.%M")
 
-    print(varaus.split('|'))
-    varausnumero = int(varaus[0])
-    varaaja = str(varaus[1])
-    päivämäärä = datetime.date(varaus[2])
-    aloitusaika = datetime.time(varaus[3])
-    tuntimäärä = int(varaus[4])
-    tuntihinta = float(varaus[5])
-    maksettu = bool(varaus[6])
-    varauskohde = str(varaus[7])
-    puhelin = int(varaus[8])
-    sähköposti = str(varaus[9])
+    varausnro = int(varaus.split('|')[0])
+    print("Varausnumero:", varausnro)
 
+    varaajannimi = str(varaus.split('|')[1])
+    print("Varaaja:", varaajannimi)
+
+    paivam = datetime.strptime(varaus.split('|')[2], "%Y-%m-%d").date()
+    print("Päivämäärä:", paivam.strftime("%d.%m.%Y"))
+
+    aloitusaika = datetime.strptime(varaus.split('|')[3], "%H:%M").time()
+    print("Aloitusaika:", aloitusaika.strftime("%H.%M"))
+
+    tuntimaara = int(varaus.split('|')[4])
+    print("Tuntimäärä:", tuntimaara)
+
+    tuntihinta = float(varaus.split('|')[5])
+    print("Tuntihinta:", tuntihinta, "€")
+
+    kokonaishinta = tuntihinta*tuntimaara
+    print("Kokonaishinta:", kokonaishinta, "€")
+
+    maksettu = varaus.split('|')[6]
+    print(f"Maksettu: {'Kyllä' if maksettu else 'Ei'}")
+
+    varauskohde = str(varaus.split('|')[7])
+    print("Kohde:", varauskohde)
+
+    puhelinnumero = str(varaus.split('|')[8])
+    print("Puhelin:", puhelinnumero)
+
+    sahkoposti = str(varaus.split('|')[9])
+    print("Sähköposti:", sahkoposti)
 
 if __name__ == "__main__":
     main()
