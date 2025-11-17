@@ -25,7 +25,7 @@ def main():
         varaus = f.read().strip()
 
     # Tulostetaan varaus konsoliin
-    print(varaus.split('|')[0])
+    print(varaus.split('|'))
     varausId = varaus.split('|')[0]
     print(varausId)
     print(type(varausId))
