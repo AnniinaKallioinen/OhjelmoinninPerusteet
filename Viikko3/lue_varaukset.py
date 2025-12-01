@@ -18,9 +18,50 @@ Sähköposti: anna.virtanen@example.com
 """
 from datetime import datetime
 
+def hae_varausnumero(varaus):
+    varausnro = varaus[0]
+    print(f"Varausnumero: {varausnro}")
+
 def hae_varaaja(varaus):
     nimi = varaus[1]
     print(f"Varaaja: {nimi}")
+
+def hae_paiva(varaus):
+    paiva = varaus[2]
+    print(f"Päivä: {paiva}")
+
+def hae_aloitusaika(varaus):
+    aloitusaika = varaus[3]
+    print(f"Aloitusaika: {aloitusaika}")
+
+def hae_tuntimaara(varaus):
+    tuntimaara = int(varaus[4])
+    print(f"Tuntimäärä: {tuntimaara}")
+
+def hae_tuntihinta(varaus):
+    tuntihinta = float(varaus[5])
+    print(f"Tuntihinta: {tuntihinta} €")
+
+def laske_kokonaishinta(varaus):
+    kokonaishinta = int(varaus[4])*float(varaus[5])
+    print(f"Kokonaishinta: {kokonaishinta} €")
+
+def hae_maksettu(varaus):
+    maksettu = varaus[6]
+    print(f"Maksettu: {'Kyllä' if True else 'Ei'}")
+
+def hae_kohde(varaus):
+    kohde = varaus[7]
+    print(f"Kohde: {kohde}")
+
+def hae_puhelin(varaus):
+    numero = varaus[8]
+    print(f"Puhelinnumero: {numero}")
+
+def hae_sahkoposti(varaus):
+    sahkoposti = varaus[9]
+    print(f"Sähköposti: {sahkoposti}")
+
 
 def main():
     # Maaritellaan tiedoston nimi suoraan koodissa
@@ -35,17 +76,17 @@ def main():
     # Luotavat funktiota tekevat tietotyyppien muunnoksen
     # ja tulostavat esimerkkitulosteen mukaisesti
 
-    #hae_varausnumero(varaus)
+    hae_varausnumero(varaus)
     hae_varaaja(varaus)
-    #hae_paiva(varaus)
-    #hae_aloitusaika(varaus)
-    #hae_tuntimaara(varaus)
-    #hae_tuntihinta(varaus)
-    #laske_kokonaishinta(varaus)
-    #hae_maksettu(varaus)
-    #hae_kohde(varaus)
-    #hae_puhelin(varaus)
-    #hae_sahkoposti(varaus)
+    hae_paiva(varaus)
+    hae_aloitusaika(varaus)
+    hae_tuntimaara(varaus)
+    hae_tuntihinta(varaus)
+    laske_kokonaishinta(varaus)
+    hae_maksettu(varaus)
+    hae_kohde(varaus)
+    hae_puhelin(varaus)
+    hae_sahkoposti(varaus)
 
 if __name__ == "__main__":
     main()
