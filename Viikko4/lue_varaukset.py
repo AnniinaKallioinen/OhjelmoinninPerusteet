@@ -19,7 +19,7 @@ int | str | str | str | date | time | int | float | bool | str | datetime
 int | str | str | str | date | time | int | float | bool | str | datetime
 ------------------------------------------------------------------------
 """
-from datetime import datetime
+from datetime import datetime, date, time
 
 def muunna_varaustiedot(varaus: list) -> list:
     # Tähän tulee siis varaus oletustietotyypeillä (str)
@@ -30,14 +30,14 @@ def muunna_varaustiedot(varaus: list) -> list:
     muutettu_varaus.append(int(varaus[0]))
     muutettu_varaus.append(str(varaus[1]))
     muutettu_varaus.append(str(varaus[2]))
-    muutettu_varaus.append(int(varaus[3]))
-    muutettu_varaus.append(str(varaus[4]))
-    muutettu_varaus.append(str(varaus[5]))
-    muutettu_varaus.append(str(varaus[6]))
-    muutettu_varaus.append(str(varaus[7]))
-    muutettu_varaus.append(str(varaus[8]))
+    muutettu_varaus.append(str(varaus[3]))
+    muutettu_varaus.append(datetime.strptime(varaus[4], "%Y-%m-%d").date())
+    muutettu_varaus.append(datetime.strptime(varaus[5], "%H:%M").time())
+    muutettu_varaus.append(int(varaus[6]))
+    muutettu_varaus.append(float(varaus[7]))
+    muutettu_varaus.append(bool(varaus[8].lower() == "true"))
     muutettu_varaus.append(str(varaus[9]))
-    muutettu_varaus.append(str(varaus[10]))
+    muutettu_varaus.append(datetime.strptime(varaus[10], "%Y-%m-%d %H:%M:%S"))
     return muutettu_varaus
 
 def hae_varaukset(varaustiedosto: str) -> list:
