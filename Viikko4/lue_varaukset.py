@@ -28,17 +28,16 @@ def muunna_varaustiedot(varaus: list) -> list:
     muutettu_varaus = []
     # Ensimmäisen alkion = varaus[0] muunnos
     muutettu_varaus.append(int(varaus[0]))
-    # Ja tästä jatkuu
-    muutettu_varaus.append("")
-    muutettu_varaus.append("")
-    muutettu_varaus.append("")
-    muutettu_varaus.append("")
-    muutettu_varaus.append("")
-    muutettu_varaus.append("")
-    muutettu_varaus.append("")
-    muutettu_varaus.append("")
-    muutettu_varaus.append("")
-    muutettu_varaus.append("")
+    muutettu_varaus.append(str(varaus[1]))
+    muutettu_varaus.append(str(varaus[2]))
+    muutettu_varaus.append(int(varaus[3]))
+    muutettu_varaus.append(str(varaus[4]))
+    muutettu_varaus.append(str(varaus[5]))
+    muutettu_varaus.append(str(varaus[6]))
+    muutettu_varaus.append(str(varaus[7]))
+    muutettu_varaus.append(str(varaus[8]))
+    muutettu_varaus.append(str(varaus[9]))
+    muutettu_varaus.append(str(varaus[10]))
     return muutettu_varaus
 
 def hae_varaukset(varaustiedosto: str) -> list:
