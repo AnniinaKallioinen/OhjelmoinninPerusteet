@@ -55,14 +55,26 @@ def hae_varaukset(varaustiedosto: str) -> list:
 def vahvistetut_varaukset(varaukset: list):
     for varaus in varaukset[1:]:
         if (varaus[8]):
-            print(f"- {varaus[1]}, {varaus[9]}, {varaus[4].strftime('%d.%m.%Y')}, {varaus[5].strftime('%H.%M')}")
-print()
+            print(f"- {varaus[1]}, {varaus[9]}, {varaus[4].strftime('%d.%m.%Y')}, klo {varaus[5].strftime('%H.%M')}")
+
+    print()
 
 def pitkat_varaukset(varaukset: list):
     for varaus in varaukset[1:]:
-        if (varaus[8]):
-            print(f"- {varaus[1]}, {varaus[9]}, {varaus[4].strftime('%d.%m.%Y')}, {varaus[5].strftime('%H.%M')}")
-print()
+       if (varaus[6] >= 3):
+        print(f"- {varaus[1]}, {varaus[4].strftime('%d.%m.%Y')}, klo {varaus[5].strftime('%H.%M')}, kesto {varaus[6]} h, {varaus[9]}")
+
+    print()
+
+def varausten_vahvistusstatus(varaukset: list):
+    for varaus in varaukset[1:]:
+       if (varaus[8]):
+        print(f"{varaus[1]} → Vahvistettu")
+       else:
+        print(f"{varaus[1]} → EI vahvistettu")
+
+    print()
+
 
 def main():
     # HUOM! seuraaville riveille ei tarvitse tehdä mitään osassa A!
@@ -73,6 +85,8 @@ def main():
     vahvistetut_varaukset(varaukset)
     print("2) Pitkät varaukset (≥ 3 h)")
     pitkat_varaukset(varaukset)
+    print("3) Varausten vahvistusstatus")
+    varausten_vahvistusstatus(varaukset)
 
 """  print(" | ".join(varaukset[0]))
     print("------------------------------------------------------------------------")
