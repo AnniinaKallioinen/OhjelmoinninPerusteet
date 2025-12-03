@@ -75,6 +75,29 @@ def varausten_vahvistusstatus(varaukset: list):
 
     print()
 
+def vahvistusten_yhteenveto(varaukset: list):
+    vahvistetutVaraukset = 0
+    eiVahvistetutVaraukset = 0
+    for varaus in varaukset[1:]:
+        if (varaus[8]):
+          vahvistetutVaraukset += 1
+        else:
+          eiVahvistetutVaraukset += 1
+
+    print(f"- Vahvistettuja varauksia {vahvistetutVaraukset} kpl")
+    print(f"- Ei-vahvistettuja varauksia {eiVahvistetutVaraukset} kpl")
+          
+    print()
+
+def varausten_kokonaistulot(varaukset: list):
+    varaustenTulot = 0
+    for varaus in varaukset[1:]:
+       if(varaus[8]):
+          varaustenTulot += (varaus[6])*(varaus[7])
+
+    print(f"Vahvistettujen varausten kokonaistulot:", f"{varaustenTulot:.2f}".replace('.',','), "€")
+
+    print()  
 
 def main():
     # HUOM! seuraaville riveille ei tarvitse tehdä mitään osassa A!
@@ -87,6 +110,10 @@ def main():
     pitkat_varaukset(varaukset)
     print("3) Varausten vahvistusstatus")
     varausten_vahvistusstatus(varaukset)
+    print("4) Yhteenveto vahvistuksista")
+    vahvistusten_yhteenveto(varaukset)
+    print("5) Vahvistettujen varausten kokonaistulot")
+    varausten_kokonaistulot(varaukset)
 
 """  print(" | ".join(varaukset[0]))
     print("------------------------------------------------------------------------")
