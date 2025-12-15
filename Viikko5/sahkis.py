@@ -4,7 +4,9 @@
 from datetime import datetime, date, time
 
 def muunna_tiedot(kulutus_tuotanto_2: list) -> list:
+
     """Muuttaa tietorivien tietotyypit oikeiksi"""
+    
     muutettu_tietorivi = []
     muutettu_tietorivi.append(datetime.fromisoformat(kulutus_tuotanto_2[0]))
     muutettu_tietorivi.append(int(kulutus_tuotanto_2[1]))
@@ -16,7 +18,9 @@ def muunna_tiedot(kulutus_tuotanto_2: list) -> list:
     return muutettu_tietorivi
 
 def lue_data(tiedoston_nimi: str) -> list:
+
     """Lukee tiedoston "viikko42.csv" ja palauttaa rivit sopivassa rakenteessa ja tietotyypeissä."""
+    
     kulutus_tuotanto_tiedot = []
     with open(tiedoston_nimi, "r", encoding="utf-8") as f:
         next(f)
@@ -57,13 +61,16 @@ def paivantiedot(paiva: str, lukemat: list) -> int:
 
 
 def main():
+
     """Ohjelman pääfunktio: lukee datan, laskee yhteenvedot ja tulostaa raportin."""
+
     lukemat = lue_data("viikko42.csv")
     print("Viikon 42 sähkönkulutus ja -tuotanto (kWh, vaiheittain)", end="\n\n")
     print("Päivä         Pvm         Kulutus [kWh]                 Tuotanto [kWh]")
     print("             (pv.kk.vvvv)  v1      v2      v3            v1     v2     v3")
     print("---------------------------------------------------------------------------")
     maanantainlukemat = paivantiedot("13.10.2025", lukemat)
+
     print(f"Maanantai     13.10.2025   ", f"{maanantainlukemat[0]:.2f}".replace('.', ','), end= "\t")
     print(f"{maanantainlukemat[1]:.2f}".replace('.', ','), end= "\t")
     print(f"{maanantainlukemat[2]:.2f}".replace('.', ','), end= "\t")
