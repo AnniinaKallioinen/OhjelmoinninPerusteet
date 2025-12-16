@@ -19,7 +19,7 @@ def muunna_tiedot(kulutus_tuotanto_2: list) -> list:
 
 def lue_data(tiedoston_nimi: str) -> list:
 
-    """Lukee tiedoston "viikko42.csv" ja palauttaa rivit sopivassa rakenteessa ja tietotyypeissä."""
+    """ Lukee tiedoston "viikko42.csv" ja palauttaa rivit sopivassa rakenteessa ja tietotyypeissä. """
     
     kulutus_tuotanto_tiedot = []
     with open(tiedoston_nimi, "r", encoding="utf-8") as f:
@@ -32,6 +32,7 @@ def lue_data(tiedoston_nimi: str) -> list:
     return kulutus_tuotanto_tiedot
 
 def paivantiedot(paiva: str, lukemat: list) -> int:
+    
     pv = int(paiva.split('.')[0])
     kk = int(paiva.split('.')[1])
     vuosi = int(paiva.split('.')[2])
