@@ -1,6 +1,6 @@
 ---------------------------------------------------------
-Raportti aikaväliltä 12.10.2025-20.10.2025
-- kokonaiskulutus: 168,66 kWh
-- kokonaistuotanto: 25,30 kWh
-- keskilämpötila: 4,11 °C
+Raportti aikaväliltä 30.10.2025-1.11.2025
+- kokonaiskulutus: 88,36 kWh
+- kokonaistuotanto: 0,00 kWh
+- keskilämpötila: 5,80 °C
 ---------------------------------------------------------
