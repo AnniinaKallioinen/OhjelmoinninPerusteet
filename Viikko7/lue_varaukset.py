@@ -6,76 +6,82 @@
 #
 # See LICENSE file in the project root for full license information.
 
+
 from datetime import datetime
+from typing import List, Dict
 
-def muunna_varaustiedot(varaus: list) -> list:
-    muutettu_varaus = []
-    muutettu_varaus.append(int(varaus[0]))
-    muutettu_varaus.append(varaus[1])
-    muutettu_varaus.append(varaus[2])
-    muutettu_varaus.append(varaus[3])
-    muutettu_varaus.append(datetime.strptime(varaus[4], "%Y-%m-%d").date())
-    muutettu_varaus.append(datetime.strptime(varaus[5], "%H:%M").time())
-    muutettu_varaus.append(int(varaus[6]))
-    muutettu_varaus.append(float(varaus[7]))
-    muutettu_varaus.append(varaus[8].lower() == "true")
-    muutettu_varaus.append(varaus[9])
-    muutettu_varaus.append(datetime.strptime(varaus[10], "%Y-%m-%d %H:%M:%S"))
-    return muutettu_varaus
+def muunna_varaustiedot(varaus_lista: List[str]) -> Dict[str, object]:
+    paiva_str = varaus_lista[4].strip()
+    aika_str = varaus_lista[5].strip().replace(".", ":")
 
-def hae_varaukset(varaustiedosto: str) -> list:
-    varaukset = []
-    varaukset.append(["varausId", "nimi", "sähköposti", "puhelin", "varauksenPvm", "varauksenKlo", "varauksenKesto", "hinta", "varausVahvistettu", "varattuTila", "varausLuotu"])
+    paiva = datetime.strptime(paiva_str, "%Y-%m-%d").date()
+    aika = datetime.strptime(aika_str, "%H:%M").time()
+
+    vahvistus_str = varaus_lista[8].strip().lower()
+    vahvistus = vahvistus_str in {"1", "true", "t", "kyllä", "kylla", "k", "yes", "y"}
+
+    return {
+        "id": int(varaus_lista[0]),
+        "nimi": varaus_lista[1],
+        "mail": varaus_lista[2],
+        "tel": varaus_lista[3],  # puhelin merkkijonona
+        "paiva": paiva,          # date
+        "aika": aika,            # time
+        "kesto": float(varaus_lista[6].replace(",", ".")),
+        "hinta": float(varaus_lista[7].replace(",", ".")),
+        "vahvistus": vahvistus,
+        "tila": varaus_lista[9],
+        "luotu": datetime.strptime(varaus_lista[10].strip(), "%Y-%m-%d").date()
+    }
+
+def hae_varaukset(varaustiedosto: str) -> List[Dict[str, object]]:
+    varaukset: List[Dict[str, object]] = []
     with open(varaustiedosto, "r", encoding="utf-8") as f:
-        for varaus in f:
-            varaus = varaus.strip()
-            varaustiedot = varaus.split('|')
+        for rivi in f:
+            rivi = rivi.strip()
+            if not rivi:
+                continue
+            varaustiedot = rivi.split('|')
             varaukset.append(muunna_varaustiedot(varaustiedot))
     return varaukset
 
-def vahvistetut_varaukset(varaukset: list):
-    for varaus in varaukset[1:]:
-        if(varaus[8]):
-            print(f"- {varaus[1]}, {varaus[9]}, {varaus[4].strftime('%d.%m.%Y')} klo {varaus[5].strftime('%H.%M')}")
-
+def vahvistetut_varaukset(varaukset: List[Dict[str, object]]) -> None:
+    for varaus in varaukset:
+        if varaus["vahvistus"]:
+            print(
+                f"- {varaus['id']}, {varaus['tila']}, "
+                f"{varaus['paiva'].strftime('%d.%m.%Y')} klo {varaus['aika'].strftime('%H.%M')}"
+            )
     print()
 
-def pitkat_varaukset(varaukset: list):
-    for varaus in varaukset[1:]:
-        if(varaus[6] >= 3):
-            print(f"- {varaus[1]}, {varaus[4].strftime('%d.%m.%Y')} klo {varaus[5].strftime('%H.%M')}, kesto {varaus[6]} h, {varaus[9]}")
-
+def pitkat_varaukset(varaukset: List[Dict[str, object]]) -> None:
+    for varaus in varaukset:
+        if float(varaus["kesto"]) >= 3:
+            print(
+                f"- {varaus['nimi']}, {varaus['paiva'].strftime('%d.%m.%Y')} "
+                f"klo {varaus['aika'].strftime('%H.%M')}, kesto {varaus['kesto']} h, {varaus['tila']}"
+            )
     print()
 
-def varausten_vahvistusstatus(varaukset: list):
-    for varaus in varaukset[1:]:
-        if(varaus[8]):
-            print(f"{varaus[1]} → Vahvistettu")
-        else:
-            print(f"{varaus[1]} → EI vahvistettu")
-
+def varausten_vahvistusstatus(varaukset: List[Dict[str, object]]) -> None:
+    for varaus in varaukset:
+        status = "Vahvistettu" if varaus["vahvistus"] else "EI vahvistettu"
+        print(f"{varaus['nimi']} → {status}")
     print()
 
-def varausten_lkm(varaukset: list):
-    vahvistetutVaraukset = 0
-    eiVahvistetutVaraukset = 0
-    for varaus in varaukset[1:]:
-        if(varaus[8]):
-            vahvistetutVaraukset += 1
-        else:
-            eiVahvistetutVaraukset += 1
-
-    print(f"- Vahvistettuja varauksia: {vahvistetutVaraukset} kpl")
-    print(f"- Ei-vahvistettuja varauksia: {eiVahvistetutVaraukset} kpl")
+def varausten_lkm(varaukset: List[Dict[str, object]]) -> None:
+    vahvistetut = sum(1 for v in varaukset if v["vahvistus"])
+    ei_vahvistetut = len(varaukset) - vahvistetut
+    print(f"- Vahvistettuja varauksia: {vahvistetut} kpl")
+    print(f"- Ei-vahvistettuja varauksia: {ei_vahvistetut} kpl")
     print()
 
-def varausten_kokonaistulot(varaukset: list):
-    varaustenTulot = 0
-    for varaus in varaukset[1:]:
-        if(varaus[8]):
-            varaustenTulot += varaus[6]*varaus[7]
-
-    print("Vahvistettujen varausten kokonaistulot:", f"{varaustenTulot:.2f}".replace('.', ','), "€")
+def varausten_kokonaistulot(varaukset: List[Dict[str, object]]) -> None:
+    tulot = 0.0
+    for v in varaukset:
+        if v["vahvistus"]:
+            tulot += float(v["kesto"]) * float(v["hinta"])
+    print("Vahvistettujen varausten kokonaistulot:", f"{tulot:.2f}".replace('.', ','), "€")
     print()
 
 def main():
